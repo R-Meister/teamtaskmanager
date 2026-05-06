@@ -22,11 +22,12 @@ router.post(
     body('name').trim().notEmpty().withMessage('Name is required'),
     body('email').isEmail().normalizeEmail().withMessage('Valid email is required'),
     body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
+    body('role').optional().isIn(['ADMIN', 'MEMBER']).withMessage('Role must be ADMIN or MEMBER'),
   ],
   handleValidationErrors,
   async (req, res) => {
     try {
-      const { name, email, password } = req.body;
+      const { name, email, password, role } = req.body;
 
       const existing = await prisma.user.findUnique({ where: { email } });
       if (existing) {
@@ -35,7 +36,7 @@ router.post(
 
       const passwordHash = await hashPassword(password);
       const user = await prisma.user.create({
-        data: { name, email, passwordHash },
+        data: { name, email, passwordHash, globalRole: role || 'MEMBER' },
         select: { id: true, name: true, email: true, globalRole: true, createdAt: true },
       });
 

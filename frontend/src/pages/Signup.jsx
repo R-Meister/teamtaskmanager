@@ -4,7 +4,7 @@ import api from '../api';
 import { useAuth } from '../context/AuthContext';
 
 export default function Signup() {
-  const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [form, setForm] = useState({ name: '', email: '', password: '', role: 'MEMBER' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
@@ -61,6 +61,18 @@ export default function Signup() {
               onChange={(e) => setForm({ ...form, password: e.target.value })}
               required
             />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Role</label>
+            <select
+              className="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+              value={form.role}
+              onChange={(e) => setForm({ ...form, role: e.target.value })}
+            >
+              <option value="MEMBER">Member</option>
+              <option value="ADMIN">Admin</option>
+            </select>
+            <p className="text-xs text-gray-500 mt-1">Admins can delete any project and manage all users.</p>
           </div>
           <button
             type="submit"
