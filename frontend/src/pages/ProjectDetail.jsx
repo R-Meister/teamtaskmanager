@@ -100,7 +100,8 @@ export default function ProjectDetail() {
   if (loading) return <div className="p-8">Loading project...</div>;
   if (!project) return <div className="p-8">Project not found.</div>;
 
-  const isAdmin = project.owner.id === JSON.parse(localStorage.getItem('user'))?.id; // Simplified check
+  const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+  const isAdmin = project.owner.id === currentUser.id;
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
