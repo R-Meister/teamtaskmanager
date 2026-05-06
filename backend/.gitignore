@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Build output
+dist/
+build/
+
+# Prisma
+prisma/migrations/*/
+!prisma/migrations/migration_lock.toml
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
